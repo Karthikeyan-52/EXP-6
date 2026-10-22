@@ -9,13 +9,15 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                echo 'Building Java application...'
-                bat 'if not exist build mkdir build'
-                bat 'javac -d build Hello.java'
-            }
-        }
+        stage('Docker Build') {
+        steps {
+        echo 'Building Docker image...'
+
+        bat '"C:\\Users\\Karthikeyan SN\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" --version'
+
+        bat '"C:\\Users\\Karthikeyan SN\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t devops-app:latest .'
+    }
+}
 
         stage('Test') {
             steps {
