@@ -11,25 +11,28 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'javac Hello.java'
+                echo 'Building Java application...'
+                bat 'javac -d . Hello.java'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'java Hello'
+                echo 'Testing Java application...'
+                bat 'java exp6.Hello'
             }
         }
 
         stage('Docker Build') {
             steps {
+                echo 'Building Docker image...'
                 bat 'docker build -t devops-app:latest .'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Application container image created successfully'
+                echo 'Application deployment completed!'
             }
         }
     }
