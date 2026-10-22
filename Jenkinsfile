@@ -5,21 +5,22 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Source code checkout completed'
+                echo 'Source code checkout completed.'
             }
         }
 
         stage('Build') {
             steps {
                 echo 'Building Java application...'
-                bat 'javac -d . Hello.java'
+                bat 'if not exist build mkdir build'
+                bat 'javac -d build Hello.java'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Testing Java application...'
-                bat 'java exp6.Hello'
+                bat 'java -cp build exp6.Hello'
             }
         }
 
@@ -32,17 +33,23 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Application deployment completed!'
+                echo 'Docker image built successfully.'
+                echo 'Application is ready for deployment.'
             }
         }
     }
 
     post {
         success {
-            echo 'DevOps Pipeline completed successfully!'
+            echo 'DevOps CI/CD Pipeline completed successfully!'
         }
+
         failure {
-            echo 'Pipeline failed. Check Console Output.'
+            echo 'Pipeline failed. Check Console Output for errors.'
+        }
+
+        always {
+            echo 'Pipeline execution completed.'
         }
     }
 }
